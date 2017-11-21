@@ -10,6 +10,11 @@
 // tgetflag
 // tgetstr
 
+struct s_choice
+{
+	
+};
+
 void	create_terminal()
 {
 	char *buf;
@@ -38,6 +43,26 @@ void	move_cursor(int hpos, int vpos)
 	ft_putstr(tgoto(command, hpos, vpos));
 }
 
+void	start_highlight()
+{
+	char *command;
+	char buf[30];
+	char *ap = buf;
+
+	command = tgetstr("so", &ap);
+	ft_putstr(command);
+}
+
+void	end_highlight()
+{
+	char *command;
+	char buf[30];
+	char *ap = buf;
+
+	command = tgetstr("se", &ap);
+	ft_putstr(command);
+}
+
 void	set_terminal_raw()
 {
 	struct termios options;
@@ -45,9 +70,10 @@ void	set_terminal_raw()
 	tcgetattr(STDIN_FILENO, &options);
 	options.c_lflag &= ~(ICANON|ECHO); /* Clear ICANON and ECHO. */
 	options.c_cc[VTIME] = 0;
-	options.c_cc[VMIN] = 4;
+	options.c_cc[VMIN] = 1;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &options);
 }
+
 
 void	init()
 {
@@ -63,22 +89,35 @@ void reset_input_mode(struct termios *saved)
 int main()
 {
 	struct termios saved;
+	int bytes_read;
+	char in_buffer[10];
 
 	init();
-
-	ft_putstr("ayy");
 	clear_screen();
-	move_cursor(10, 10);
-	ft_putstr("boo");
-	move_cursor(10, 11);
-	ft_putstr("boo");
+
+	start_highlight();
+	ft_putstr("Choice 1");
+	end_highlight();
+	move_cursor(0,1);
+	ft_putstr("Choice 2");
+	move_cursor(0,2);
+	ft_putstr("Choice 3");
+	move_cursor(0,3);
 
 	char *s;
-  	while ((s = get_next_line(0)))
-    {
-      my_putstr(s);
-      my_putchar('\n');
-      free(s);
-    }
+  	while (1)
+  	{
+  		bytes_read = read(STDIN_FILENO, &in_buffer, 1);
+  		if (in_buffer[0] == '\033'){
+  			read(STDIN_FILENO, &in_buffer, 1);
+  			read(STDIN_FILENO, &in_buffer, 1);
+  			if (in_buffer[0] == 'A'){
+  				move_cursor(0, 1);
+  				start_highlight();
+  				move_cursor(1,1);
+  				end_highlight();
+  			}
+  		}
+  	}
 	return (0);
 }
