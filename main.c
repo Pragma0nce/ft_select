@@ -2,33 +2,19 @@
 #include <stdlib.h>
 #include <termcap.h>
 #include <unistd.h>
+#include <termios.h>
+#include "libft/libft.h"
 
 // tgetnum
 // tgetflag
 // tgetstr
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
 
-void	ft_putstr(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
-}
-
-char	*create_terminal()
+void	create_terminal()
 {
 	char *buf;
 	buf = (char*)malloc(sizeof(char) * 1024);
 	tgetent(buf, getenv("TERM"));
-	return (buf);
+	// return (buf);
 }
 
 void	clear_screen(void)
@@ -51,15 +37,28 @@ void	move_cursor(int hpos, int vpos)
 	ft_putstr(tgoto(command, hpos, vpos));
 }
 
+void	set_terminal_raw()
+{
+	struct termios options;
+	options.c_cc[VTIME] = 0;
+	options.c_cc[VMIN] = 4;
+}
+
+void	init()
+{
+	create_terminal();
+	set_terminal_raw();
+}
+
 int main()
 {
-	char *term_desc;
-
-	term_desc = create_terminal();
+	init();
 
 	ft_putstr("ayy");
 	clear_screen();
 	move_cursor(10, 10);
+	ft_putstr("boo");
+	move_cursor(10, 11);
 	ft_putstr("boo");
 	return (0);
 }
