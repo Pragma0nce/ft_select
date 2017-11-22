@@ -1,7 +1,7 @@
 CFLAGS=-Wall -Werror -Wextra
 EXECUTABLE=ft_select
 LDFLAGS=-ltermcap ./libft/libft.a
-OBJECTS=main.o get_next_line.o
+OBJECTS=main.o events.o termcaps.o menu.o terminal.o
 
 all: ft_libft ft_select
 
@@ -14,8 +14,17 @@ ft_select: $(OBJECTS)
 main.o: main.c
 	gcc -c main.c
 
-get_next_line.o: get_next_line.c
-	gcc -c get_next_line.c
+events.o: events.c
+	gcc -c events.c
+
+termcaps.o: termcaps.c
+	gcc -c termcaps.c
+
+menu.o: menu.c
+	gcc -c menu.c
+
+terminal.o: terminal.c
+	gcc -c terminal.c
 
 .PHONY : clean
 clean:
