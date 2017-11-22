@@ -10,14 +10,26 @@
 
 typedef struct s_menu t_menu;
 
+typedef struct s_select t_select;
+
+void	display_menu(t_menu *menu);
+
 struct s_menu
 {
-	int cur_choice;
-	int num_choices;
-	int cursor_x;
-	int cursor_y;
+	int 		num_choices;
+	int			cur_choice;
+	int 		cursor_x;
+	int 		cursor_y;
+	t_select	*head;
+	t_select 	*list;
+};
 
-	char **choices;
+struct s_select
+{
+	char		*value;
+	int			is_selected;
+	t_select	*prev;
+	t_select	*next;
 };
 
 void		display_menu(t_menu *menu);
