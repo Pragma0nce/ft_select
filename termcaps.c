@@ -60,6 +60,16 @@ void	hide_cursor(void)
 	ft_putstr(command);
 }
 
+void	show_cursor(void)
+{
+	char *command;
+	char buf[30];
+	char *ap = buf;
+
+	command = tgetstr("ve", &ap);
+	ft_putstr(command);
+}
+
 void	end_underline(void)
 {
 	char *command;

@@ -35,7 +35,8 @@ int main(int argc, char **argv)
 	char *s;
   	while (1)
   	{
-  		bytes_read = read(STDIN_FILENO, &in_buffer, 1);
+  		ft_bzero(in_buffer, 10);
+  		bytes_read = read(STDIN_FILENO, &in_buffer, 2);
   		check_key(in_buffer, menu);
   	}
 	return (0);

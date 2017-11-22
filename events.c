@@ -2,10 +2,13 @@
 
 void	check_key(char *key, t_menu *menu)
 {
-	if (key[0] == '\033')
+	if (key[0] == '\033' && key[1] == 0)
 	{
-  		read(STDIN_FILENO, key, 1);
-  		read(STDIN_FILENO, key, 1);
+		show_cursor();
+		exit(0);
+	}
+	else
+	{
   		if (key[0] == 'A'){
   			menu_up(menu);
   		}

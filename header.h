@@ -36,7 +36,8 @@ void		reset_input_mode(struct termios *saved);
 void		check_key(char *key, t_menu *menu);
 void		end_underline(void);
 void		start_underline(void);
-void	hide_cursor(void);
+void		hide_cursor(void);
+void		show_cursor(void);
 
 
 
