@@ -30,10 +30,10 @@ void	display_menu(t_menu *menu)
 	while (i < menu->num_choices)
 	{
 		if (i == menu->cur_choice)
-			start_highlight();
+			start_underline();
 		ft_putstr(menu->choices[i]);
 		if (i == menu->cur_choice)
-			end_highlight();
+			end_underline();
 		ft_putstr("\n");
 		// menu_down(menu);
 		i++;

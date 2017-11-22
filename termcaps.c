@@ -39,3 +39,23 @@ void	end_highlight(void)
 	command = tgetstr("se", &ap);
 	ft_putstr(command);
 }
+
+void	start_underline(void)
+{
+	char *command;
+	char buf[30];
+	char *ap = buf;
+
+	command = tgetstr("us", &ap);
+	ft_putstr(command);
+}
+
+void	end_underline(void)
+{
+	char *command;
+	char buf[30];
+	char *ap = buf;
+
+	command = tgetstr("ue", &ap);
+	ft_putstr(command);
+}
