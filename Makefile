@@ -4,7 +4,7 @@ LDFLAGS=-ltermcap ./libft/libft.a
 OBJECTS=main.o get_next_line.o
 
 all: ft_libft ft_select
-	./ft_select
+
 ft_libft:
 	$(MAKE) -C ./libft
 
