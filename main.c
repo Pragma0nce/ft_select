@@ -48,20 +48,21 @@ void	menu_up(t_menu *menu)
 {
 	// ft_putstr("\033[A");
 	// menu->cursor_y -=1;
-	if (menu->cur_choice >= 1){
-		menu->cur_choice -=1;
-		display_menu(menu);
-	}
+	if (menu->cur_choice <= 0)
+		menu->cur_choice = menu->num_choices;
+	menu->cur_choice -=1;
+	display_menu(menu);
 }
 
 void	menu_down(t_menu *menu)
 {
 	// ft_putstr("\033[B");
 	// menu->cursor_y += 1;
-	if (menu->cur_choice < menu->num_choices){
-		menu->cur_choice +=1;
-		display_menu(menu);
-	}
+	if (menu->cur_choice >= menu->num_choices - 1)
+		menu->cur_choice = -1;
+
+	menu->cur_choice +=1;
+	display_menu(menu);
 }
 
 void	start_highlight()
@@ -116,9 +117,9 @@ void	display_menu(t_menu *menu)
 		if (i == menu->cur_choice)
 			start_highlight();
 		ft_putstr(menu->choices[i]);
-		ft_putstr("\n");
 		if (i == menu->cur_choice)
 			end_highlight();
+		ft_putstr("\n");
 		// menu_down(menu);
 		i++;
 	}
