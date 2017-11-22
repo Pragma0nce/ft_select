@@ -50,6 +50,16 @@ void	start_underline(void)
 	ft_putstr(command);
 }
 
+void	hide_cursor(void)
+{
+	char *command;
+	char buf[30];
+	char *ap = buf;
+
+	command = tgetstr("vi", &ap);
+	ft_putstr(command);
+}
+
 void	end_underline(void)
 {
 	char *command;

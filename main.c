@@ -20,6 +20,7 @@ int main(int argc, char **argv)
 	init(argc, argv);
 	menu = create_menu(argc,argv);
 	clear_screen();
+	hide_cursor();
 
 	display_menu(menu);
 	// start_highlight();
