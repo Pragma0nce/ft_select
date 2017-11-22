@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <termcap.h>
-#include <unistd.h>
-#include <termios.h>
-#include "libft/libft.h"
-#include "get_next_line.h"
+#include "header.h"
 
 // tgetnum
 // tgetflag
@@ -12,17 +6,6 @@
 
 typedef struct s_menu t_menu;
 
-void	display_menu(t_menu *menu);
-
-struct s_menu
-{
-	int cur_choice;
-	int num_choices;
-	int cursor_x;
-	int cursor_y;
-
-	char **choices;
-};
 
 void	clear_screen(void)
 {
@@ -65,7 +48,7 @@ void	menu_down(t_menu *menu)
 	display_menu(menu);
 }
 
-void	start_highlight()
+void	start_highlight(void)
 {
 	char *command;
 	char buf[30];
@@ -75,7 +58,7 @@ void	start_highlight()
 	ft_putstr(command);
 }
 
-void	end_highlight()
+void	end_highlight(void)
 {
 	char *command;
 	char buf[30];
@@ -125,7 +108,7 @@ void	display_menu(t_menu *menu)
 	}
 }
 
-void	create_terminal()
+void	create_terminal(void)
 {
 	char *buf;
 	buf = (char*)malloc(sizeof(char) * 1024);
@@ -134,7 +117,7 @@ void	create_terminal()
 }
 
 
-void	set_terminal_raw()
+void	set_terminal_raw(void)
 {
 	struct termios options;
 
