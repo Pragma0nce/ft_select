@@ -7,7 +7,7 @@ t_select	*create_list(int n, char **array)
 	t_select	*list;
 	t_select	*prev_link;
 
-	i = 0;
+	i = 1;
 	list = (t_select*)malloc(sizeof(t_select));
 	prev_link = NULL;
 	head = list;
@@ -28,40 +28,78 @@ t_select	*create_list(int n, char **array)
 	return (head);
 }
 
+void	display_usage(void)
+{
+	ft_putstr("Please supply arguments\n");
+	ft_putstr("Usage: ./ft_select [argument 1] [argument 2] [argument n] ...\n");
+}
+
 t_menu	*create_menu(int n, char **argv)
 {
-	int i;
 	int j;
 	t_menu *menu;
 
+	if (n < 2)
+	{
+		display_usage();
+		exit(1);
+	}
 	menu = (t_menu*)malloc(sizeof(menu));
-	menu->num_choices = n;
-	i = 0;
+	menu->num_choices = n - 1;
 	menu->list = create_list(n, argv);
 	menu->cur_choice = 0;
 	menu->head = menu->list;
 	return (menu);
 }
 
+void	print_underline(t_menu *menu)
+{
+	
+	if (menu->list->is_selected)
+	{
+		start_underline();
+		start_highlight();
+		ft_putstr(menu->list->value);
+		end_underline();
+		end_highlight();
+	}
+	else
+	{
+		start_underline();
+		ft_putstr(menu->list->value);
+		end_underline();
+	}
+}
+
+void	print_selected(t_menu *menu)
+{
+		start_highlight();
+		ft_putstr(menu->list->value);
+		end_highlight();
+}
+
 void	display_menu(t_menu *menu)
 {
 	int i = 0;
-	menu->list = menu->head;
+	t_menu *itt;
+
+	itt = menu;
+	itt->list = itt->head;
 	clear_screen();
-	while (i < menu->num_choices)
+	while (i < itt->num_choices)
 	{
-		if (i == menu->cur_choice)
+		if (i == itt->cur_choice)
 		{
-			start_underline();
-			ft_putstr(menu->list->value);
-			end_underline();
+			print_underline(itt);	
+		}
+		else if (itt->list->is_selected)
+		{
+			print_selected(itt);
 		}
 		else
-		{
-			ft_putstr(menu->list->value);
-		}
+			ft_putstr(itt->list->value);
 		ft_putstr("\n");
-		menu->list = menu->list->next;
+		itt->list = itt->list->next;
 		i++;
 	}
 }
@@ -87,3 +125,23 @@ void	menu_down(t_menu *menu)
 	display_menu(menu);
 }
 
+void	select_item(t_menu *menu)
+{
+	int			index;
+	int			count;
+	t_menu		*itt;
+
+	count = 0;
+	itt = menu;
+	index = itt->cur_choice;
+	while (count != index)
+	{
+		count++;
+		itt->list = itt->list->next;
+	}
+	if (itt->list->is_selected == 1)
+		itt->list->is_selected = 0;
+	else
+		itt->list->is_selected = 1;
+	display_menu(menu);
+ }

@@ -32,6 +32,7 @@ struct s_select
 	t_select	*next;
 };
 
+void		select_item(t_menu *menu);
 void		display_menu(t_menu *menu);
 void		clear_screen(void);
 void		move_cursor(int hpos, int vpos);

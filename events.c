@@ -9,12 +9,17 @@ void	check_key(char *key, t_menu *menu)
 	}
 	else
 	{
-  		if (key[0] == 'A'){
+  		if (key[0] == 'A')//up
+      {
   			menu_up(menu);
   		}
-  		else if (key[0] == 'B')
+  		else if (key[0] == 'B')//down
   		{
   			menu_down(menu);
   		}
+      else if (key[0] == 32)//spacebar
+      {
+        select_item(menu);
+      } 
   	}
 }
